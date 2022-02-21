@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>
+            <%=title%>
+        </title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery.ui.position.min.js"></script>
+    </head>
+    <body>
+        <!-- Main container element to contain todo App -->
+        <div class="main_container">
+            <div>
+                <h1 id="page_heading">TODO App</h1>
+            </div>
+            <hr size="1" width="100%" color="#ded7d7">
+            <div class="flex_row">
+                <!-- Container to take user input for todo list item's description -->
+                <div class="label_container" style="width:60%;">
+                    <label class="label" for="todo_content">DESCRIPTION</label>
+                    <input class="after_label" id="todo_content" placeholder="What do you need to do?">
+                </div>
+                <!-- Container to show buttons for editing to do list item's description. Hidden by default. -->
+                <!-- Shows up on clicking edit button-->
+                <div class="flex_row button_container"style="width:35%;">
+                    <button class="category_button half_width" id="update" style="background-color: rgb(27, 172, 46);" title="Update todo description">UPDATE</button>
+                    <button class="category_button half_width" id="cancel" style="background-color: rgb(223, 27, 27);" title="Cancel update">CANCEL</button>
+                </div>               
+            </div>           
+            <hr size="1" width="100%" color="#ded7d7">
+            <!-- Take user input to select category for todo list item -->
+            <div class="flex_row">
+                <div class="label_container half_width right_border">
+                    <label class="label" for="category">CATEGORY</label>
+                    <select name="category" class="after_label" id="category">
+                        <option value="choose a category">Choose a Category</option>
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="school">School</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+                <!-- Take user input for deadline of todo list item -->
+                <div class="label_container half_width">
+                    <label class="label" for="due_date">DUE DATE</label>
+                    <input class="after_label" type="date" id="due_date" name="due_date">
+                </div>
+            </div>
+            <hr size="1" width="100%" color="#ded7d7">
+            <!-- Button container for add task and delete tasks buttons -->
+            <div class="flex_row button_container">
+                <a><button class="custom_button" id="add_task" title="Add a todo item"><i class="fa fa-plus" aria-hidden="true"></i>ADD TASK</button></a>
+                <a><button class="custom_button" id="delete_tasks" disabled title="Delete todo items"><i class="fas fa-trash-alt"></i>DELETE TASKS</button></a>
+            </div>
+            <hr size="1" width="100%" color="#ded7d7">
+            <div>
+                <!-- iterate through the list items obtained from server and display on the page -->
+                <ul>
+                    <% for(let item of todo_list) { %>
+                        <li class="flex_row">
+                            <!-- Set name attribute to id of list item to be used while deletion -->
+                            <input type="checkbox" name="<%=item._id%>">
+                            <div class="flex_row">
+                                <div class="label_container">
+                                    <label class="title"><%= item.description%></label>
+                                    <span class="after_label_span"><i class="fas fa-calendar-alt"></i><%= item.date%></span>
+                                </div>
+                                <% if(item.category == 'Personal') {%>
+                                    <button class="category_button" style="background-color: blueviolet;">PERSONAL</button>
+                                <% } else if(item.category == 'Work') { %>
+                                    <button class="category_button" style="background-color: rgb(33, 182, 182);">WORK</button>
+                                <% } else if(item.category == 'School') { %>
+                                    <button class="category_button" style="background-color: rgb(207, 190, 34);">SCHOOL</button>
+                                <% } else if(item.category == 'Cleaning') { %>
+                                    <button class="category_button" style="background-color: rgb(192, 41, 124);">CLEANING</button>
+                                <% } else if(item.category == 'Others') { %>
+                                    <button class="category_button" style="background-color: rgb(47, 148, 27);">OTHERS</button>
+                                <% } %>
+                                <!-- Set name attribute to id of list item to be used while updation -->
+                                <i class="fas fa-edit" name="<%=item._id%>"  title="Edit todo description"></i>
+                            </div>
+                        </li>    
+                        <hr size="1" width="90%" color="#ded7d7">
+                    <% } %>                        
+                </ul>
+                <br>
+            </div>
+        </div>
+        <script type="text/javascript" src="/js/script.js"></script>      
+    </body>
+</html>
